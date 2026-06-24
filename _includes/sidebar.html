@@ -1,0 +1,41 @@
+<aside class="sidebar">
+  <div>
+    <div class="site-name"><a href="{{ '/' | relative_url }}" style="color:inherit;">{{ site.title }}</a></div>
+    <div class="site-sub">{{ site.author }}'s notebook<br />{{ site.location }}</div>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-label">pages</div>
+    <div class="sb-links">
+      <a href="{{ '/' | relative_url }}#writing">writing</a>
+      <a href="{{ '/' | relative_url }}#projects">projects</a>
+      <a href="{{ '/' | relative_url }}#notes">notes</a>
+      <a href="{{ '/' | relative_url }}#reading">reading</a>
+      <a href="{{ '/about/' | relative_url }}">about</a>
+    </div>
+  </div>
+
+  {% if site.data.active_work %}
+  <div class="sb-section">
+    <div class="sb-label">active work</div>
+    <div>
+      {% for item in site.data.active_work %}
+      <div class="proj-item">
+        <span class="proj-name">{{ item.name }}</span>
+        <span class="proj-state{% if item.state == 'not started' %} inactive{% endif %}">{{ item.state }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="sb-footer">
+    <div class="sb-label" style="margin-bottom: 0.4rem;">find me</div>
+    {% if site.github_username %}
+    <a href="https://github.com/{{ site.github_username }}">github</a>
+    {% endif %}
+    {% if site.email %}
+    <a href="mailto:{{ site.email }}">email</a>
+    {% endif %}
+  </div>
+</aside>

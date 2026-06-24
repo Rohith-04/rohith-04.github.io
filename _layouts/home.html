@@ -1,0 +1,84 @@
+---
+layout: default
+---
+
+<section class="section intro">
+  <p>hi, i'm {{ site.author }}.</p>
+  <p>
+    {{ site.description }}
+  </p>
+  <p>
+    currently deep in project linnea — a multicore RISC-V system on a custom
+    mesh NoC. the NoC mostly works. the CPU doesn't exist yet.
+    working through onur mutlu's architecture lectures before i make
+    any more decisions i'll regret.
+  </p>
+  <p class="dim">if you work on cache coherence and want to talk, please email me.</p>
+</section>
+
+{% assign posts = site.posts %}
+{% if posts.size > 0 %}
+<section class="section" id="writing">
+  <div class="section-label">writing</div>
+  <div class="post-list">
+    {% for post in posts %}
+    <div class="post">
+      <span class="post-date">{{ post.date | date: "%d %b %Y" }}</span>
+      <div class="post-body">
+        <div class="post-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></div>
+        {% if post.excerpt %}
+        <div class="post-blurb">{{ post.excerpt | strip_html | truncatewords: 30 }}</div>
+        {% endif %}
+        {% if post.tags.size > 0 %}
+        <div class="post-tags">{% for tag in post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% if site.data.projects %}
+<section class="section" id="projects">
+  <div class="section-label">projects</div>
+  {% for proj in site.data.projects %}
+  <div class="proj-card">
+    <div class="proj-card-head">
+      <span class="proj-card-name">{{ proj.name }}</span>
+      <span class="proj-card-status{% if proj.status == 'done' %} done{% endif %}">{{ proj.status }}</span>
+    </div>
+    <p class="proj-card-desc">{{ proj.desc }}</p>
+    {% if proj.tags %}
+    <div class="post-tags">{% for tag in proj.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
+    {% endif %}
+  </div>
+  {% endfor %}
+</section>
+{% endif %}
+
+{% if site.data.notes %}
+<section class="section" id="notes">
+  <div class="section-label">scratch notes</div>
+  {% for note in site.data.notes %}
+  <div class="note">
+    <div class="note-meta">{{ note.date }}</div>
+    <div class="note-text">{{ note.text | markdownify }}</div>
+  </div>
+  {% endfor %}
+</section>
+{% endif %}
+
+{% if site.data.reading %}
+<section class="section" id="reading">
+  <div class="section-label">reading</div>
+  <div>
+    {% for book in site.data.reading %}
+    <div class="book">
+      <span class="book-title">{{ book.title }}</span>
+      <span class="book-status">{{ book.status }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}

@@ -1,0 +1,9 @@
+- name: "project linnea"
+  status: "active"
+  desc: "multicore RISC-V on a custom 2D mesh NoC. UVM verification on VCS/Verdi, AXI4-Stream compliance. cache coherence is the next hard problem. ZedBoard for FPGA validation. doubles as my major project."
+  tags: ["SystemVerilog", "UVM", "RISC-V", "VCS / Verdi", "ZedBoard"]
+
+- name: "aervia — embedded AI voice agent"
+  status: "done"
+  desc: "production voice agent on constrained hardware. built the AXI DMA controller, peripheral drivers, inference pipeline. first time i debugged hardware and software simultaneously and didn't know which one was lying."
+  tags: ["C", "AXI DMA", "FPGA"]

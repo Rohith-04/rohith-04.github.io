@@ -1,0 +1,8 @@
+- name: "project linnea"
+  state: "NoC verification"
+
+- name: "RISC-V core"
+  state: "not started"
+
+- name: "ZedBoard"
+  state: "on the bench"

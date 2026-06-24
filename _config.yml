@@ -1,13 +1,17 @@
-title: Musashi's Blog
+title: musashi
 email: rohith.narsing@gmail.com
+author: rohith
+location: hyderabad
 description: >-
-    Notes on computer architecture,
-    digital design and Linux.
-baseurl: "" 
-url: "https://rohith-04.github.io/" 
-github_username:  Rohith-04
+  final-year ECE in hyderabad. pivoting from embedded systems into RTL design
+  and computer architecture. this is where i keep notes on things i build
+  and stuff i'm trying to understand.
+baseurl: ""
+url: "https://rohith-04.github.io/"
+github_username: Rohith-04
 
 # Build settings
-theme: minima
+theme: null
 plugins:
   - jekyll-feed
+  - jekyll-seo-tag

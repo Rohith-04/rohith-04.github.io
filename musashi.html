@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>musashi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:         #0f1012;
+      --bg-subtle:  #141619;
+      --surface:    #1a1d22;
+      --border:     #282c33;
+      --text:       #e2e4e9;
+      --muted:      #8a929f;
+      --faint:      #4f5662;
+      --link:       #4c84a3;
+      --green:      #708a4f;
+      --sidebar-w:  220px;
+      --mono:       'IBM Plex Mono', monospace;
+      --serif:      'IBM Plex Serif', serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 15px; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--serif);
+      line-height: 1.75;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ── sidebar ─────────────────────────────── */
+    .sidebar {
+      background: var(--bg-subtle);
+      border-right: 1px solid var(--border);
+      padding: 2.5rem 1.25rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .site-name {
+      font-family: var(--mono);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .site-sub {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--faint);
+      margin-top: 0.3rem;
+      line-height: 1.5;
+    }
+
+    .sb-section { display: flex; flex-direction: column; gap: 0.6rem; }
+
+    .sb-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--faint);
+      padding-bottom: 0.3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sb-links { display: flex; flex-direction: column; gap: 0.25rem; }
+    .sb-links a {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .sb-links a:hover { color: var(--text); text-decoration: none; }
+
+    .proj-item {
+      padding: 0.45rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .proj-item:last-child { border-bottom: none; }
+    .proj-name {
+      font-family: var(--mono);
+      font-size: 0.73rem;
+      color: var(--text);
+      display: block;
+    }
+    .proj-state {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--green);
+      margin-top: 0.1rem;
+    }
+    .proj-state.inactive { color: var(--faint); }
+
+    .sb-footer {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .sb-footer a {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    .sb-footer a:hover { color: var(--text); text-decoration: none; }
+
+    /* ── main ────────────────────────────────── */
+    .main {
+      padding: 3.5rem 4rem 6rem 4rem;
+      max-width: calc(var(--sidebar-w) + 700px);
+    }
+    .content { max-width: 640px; }
+
+    /* ── sections ────────────────────────────── */
+    .section { margin-bottom: 3.75rem; }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* intro */
+    .intro p {
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 0.85rem;
+    }
+    .intro p:last-child { margin-bottom: 0; }
+    .intro .dim { color: var(--muted); }
+
+    /* posts */
+    .post-list { display: flex; flex-direction: column; }
+    .post {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 0 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: baseline;
+    }
+    .post:first-child { border-top: 1px solid var(--border); }
+    .post-date {
+      font-family: var(--mono);
+      font-size: 0.67rem;
+      color: var(--faint);
+      padding-top: 0.15rem;
+    }
+    .post-body {}
+    .post-title {
+      font-family: var(--serif);
+      font-size: 0.93rem;
+      color: var(--text);
+      font-weight: 500;
+      line-height: 1.45;
+    }
+    .post-title a { color: inherit; }
+    .post-title a:hover { color: var(--link); text-decoration: none; }
+    .post-blurb {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+      line-height: 1.55;
+    }
+    .post-tags { display: flex; gap: 0.35rem; margin-top: 0.35rem; flex-wrap: wrap; }
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--faint);
+      border: 1px solid var(--border);
+      padding: 0.05rem 0.35rem;
+    }
+
+    /* notes */
+    .note {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .note:first-child { border-top: 1px solid var(--border); }
+    .note-meta {
+      font-family: var(--mono);
+      font-size: 0.63rem;
+      color: var(--faint);
+      margin-bottom: 0.25rem;
+    }
+    .note-text {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .note-text code {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text);
+      background: var(--surface);
+      padding: 0.1em 0.3em;
+    }
+
+    /* projects */
+    .proj-card {
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .proj-card:first-child { border-top: 1px solid var(--border); }
+    .proj-card-head {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      margin-bottom: 0.3rem;
+    }
+    .proj-card-name {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .proj-card-status {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--green);
+    }
+    .proj-card-status.done { color: var(--faint); }
+    .proj-card-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+
+    /* reading */
+    .book {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0 1rem;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: baseline;
+    }
+    .book:first-child { border-top: 1px solid var(--border); }
+    .book-title { font-size: 0.85rem; color: var(--text); }
+    .book-status {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--faint);
+      white-space: nowrap;
+    }
+
+    /* footer */
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.63rem;
+      color: var(--faint);
+      line-height: 1.8;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); }
+
+    @media (max-width: 760px) {
+      body { grid-template-columns: 1fr; }
+      .sidebar {
+        position: relative;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        padding: 1.5rem 1.25rem;
+      }
+      .sb-footer { margin-top: 0; }
+      .main { padding: 2.5rem 1.25rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div>
+    <div class="site-name">musashi</div>
+    <div class="site-sub">rohith's notebook<br>hyderabad</div>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-label">pages</div>
+    <div class="sb-links">
+      <a href="#">writing</a>
+      <a href="#">projects</a>
+      <a href="#">notes</a>
+      <a href="#">reading</a>
+      <a href="#">about</a>
+    </div>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-label">active work</div>
+    <div>
+      <div class="proj-item">
+        <span class="proj-name">project linnea</span>
+        <span class="proj-state">NoC verification</span>
+      </div>
+      <div class="proj-item">
+        <span class="proj-name">RISC-V core</span>
+        <span class="proj-state inactive">not started</span>
+      </div>
+      <div class="proj-item">
+        <span class="proj-name">ZedBoard</span>
+        <span class="proj-state">on the bench</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sb-footer">
+    <div class="sb-label" style="margin-bottom: 0.4rem;">find me</div>
+    <a href="#">github</a>
+    <a href="#">email</a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="content">
+
+    <section class="section intro">
+      <p>hi, i'm rohith.</p>
+      <p>
+        final-year ECE in hyderabad. pivoting from embedded systems into RTL design
+        and computer architecture. this is where i keep notes on things i build
+        and stuff i'm trying to understand.
+      </p>
+      <p>
+        currently deep in project linnea — a multicore RISC-V system on a custom
+        mesh NoC. the NoC mostly works. the CPU doesn't exist yet.
+        working through onur mutlu's architecture lectures before i make
+        any more decisions i'll regret.
+      </p>
+      <p class="dim">if you work on cache coherence and want to talk, please email me.</p>
+    </section>
+
+    <section class="section">
+      <div class="section-label">writing</div>
+      <div class="post-list">
+
+        <div class="post">
+          <span class="post-date">11 jun 2025</span>
+          <div class="post-body">
+            <div class="post-title"><a href="#">why i'm building a NoC before a CPU</a></div>
+            <div class="post-blurb">the interconnect is the hardest part. i wanted to understand it before i had cores to connect.</div>
+            <div class="post-tags"><span class="tag">architecture</span><span class="tag">NoC</span></div>
+          </div>
+        </div>
+
+        <div class="post">
+          <span class="post-date">28 may 2025</span>
+          <div class="post-body">
+            <div class="post-title"><a href="#">AXI4-Stream on a mesh NoC: what the spec doesn't say</a></div>
+            <div class="post-blurb">compliance testing revealed three assumptions i didn't know i was making.</div>
+            <div class="post-tags"><span class="tag">AXI</span><span class="tag">RTL</span><span class="tag">verification</span></div>
+          </div>
+        </div>
+
+        <div class="post">
+          <span class="post-date">09 may 2025</span>
+          <div class="post-body">
+            <div class="post-title"><a href="#">writing a UVM environment from scratch, the second time</a></div>
+            <div class="post-blurb">i had scoreboard and monitor experience but had never stitched a complete env together.</div>
+            <div class="post-tags"><span class="tag">UVM</span><span class="tag">verification</span></div>
+          </div>
+        </div>
+
+        <div class="post">
+          <span class="post-date">17 apr 2025</span>
+          <div class="post-body">
+            <div class="post-title"><a href="#">six months in embedded, coming back to RTL</a></div>
+            <div class="post-blurb">what abstraction layers feel like when you've lived at several of them.</div>
+            <div class="post-tags"><span class="tag">embedded</span><span class="tag">reflection</span></div>
+          </div>
+        </div>
+
+        <div class="post">
+          <span class="post-date">30 mar 2025</span>
+          <div class="post-body">
+            <div class="post-title"><a href="#">AXI DMA from first principles</a></div>
+            <div class="post-blurb">built one at aervia. wrote it up properly so i'd actually remember how it works.</div>
+            <div class="post-tags"><span class="tag">AXI</span><span class="tag">DMA</span><span class="tag">RTL</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">projects</div>
+
+      <div class="proj-card">
+        <div class="proj-card-head">
+          <span class="proj-card-name">project linnea</span>
+          <span class="proj-card-status">active</span>
+        </div>
+        <p class="proj-card-desc">
+          multicore RISC-V on a custom 2D mesh NoC. UVM verification on VCS/Verdi,
+          AXI4-Stream compliance. cache coherence is the next hard problem.
+          ZedBoard for FPGA validation. doubles as my major project.
+        </p>
+        <div class="post-tags">
+          <span class="tag">SystemVerilog</span><span class="tag">UVM</span>
+          <span class="tag">RISC-V</span><span class="tag">VCS / Verdi</span><span class="tag">ZedBoard</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-card-head">
+          <span class="proj-card-name">aervia — embedded AI voice agent</span>
+          <span class="proj-card-status done">done</span>
+        </div>
+        <p class="proj-card-desc">
+          production voice agent on constrained hardware. built the AXI DMA controller,
+          peripheral drivers, inference pipeline. first time i debugged hardware and
+          software simultaneously and didn't know which one was lying.
+        </p>
+        <div class="post-tags">
+          <span class="tag">C</span><span class="tag">AXI DMA</span><span class="tag">FPGA</span>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="section">
+      <div class="section-label">scratch notes</div>
+
+      <div class="note">
+        <div class="note-meta">jun 2025 — mutlu's memory lectures</div>
+        <div class="note-text">
+          the DRAM refresh overhead section is making me rethink assumptions about
+          memory controller design. the latency numbers feel wrong until you draw
+          the timing diagram by hand. i drew it three times.
+        </div>
+      </div>
+
+      <div class="note">
+        <div class="note-meta">may 2025 — UVM factory override</div>
+        <div class="note-text">
+          used <code>type_id::set_type_override_by_type()</code> to swap in an error-injection
+          driver without touching the testbench topology. first time factory overrides
+          felt like a feature and not ceremony.
+        </div>
+      </div>
+
+      <div class="note">
+        <div class="note-meta">apr 2025 — mesh NoC deadlock</div>
+        <div class="note-text">
+          three days chasing a livelock. two routers waiting on each other's credits.
+          the flow control assumptions were implicit in the RTL.
+          writing them down first would have saved the three days.
+        </div>
+      </div>
+
+    </section>
+
+    <section class="section">
+      <div class="section-label">reading</div>
+      <div>
+        <div class="book">
+          <span class="book-title">Computer Architecture: A Quantitative Approach — H&P</span>
+          <span class="book-status">reading</span>
+        </div>
+        <div class="book">
+          <span class="book-title">A Primer on Memory Consistency and Cache Coherence</span>
+          <span class="book-status">queued</span>
+        </div>
+        <div class="book">
+          <span class="book-title">The RISC-V Reader — Patterson & Waterman</span>
+          <span class="book-status">done</span>
+        </div>
+        <div class="book">
+          <span class="book-title">Onur Mutlu — Computer Architecture (CMU 2023)</span>
+          <span class="book-status">in progress</span>
+        </div>
+        <div class="book">
+          <span class="book-title">The Art of Unix Programming — ESR</span>
+          <span class="book-status">done</span>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      rohith's corner of the internet.<br />
+      updated when i have something to say.<br />
+      no analytics. no tracking.<br />
+      <a href="#">github</a> · <a href="#">email</a>
+    </footer>
+
+  </div>
+</main>
+
+</body>
+</html>
