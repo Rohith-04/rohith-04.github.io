@@ -1,0 +1,3 @@
+building: "project linnea — a multicore RISC-V system on a custom 2D mesh NoC"
+reading: "Computer Architecture: A Quantitative Approach (H&P) and cache coherence primers"
+focus: "cache coherence protocols and NoC router microarchitecture"
