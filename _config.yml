@@ -9,6 +9,7 @@ description: >-
 baseurl: ""
 url: "https://rohith-04.github.io/"
 github_username: Rohith-04
+linkedin_username: rohith-narsingipyta
 
 # Build settings
 theme: null

@@ -1,0 +1,18 @@
+---
+layout: default
+---
+
+<section class="section">
+  <div class="section-label">all notes</div>
+
+  {% if site.data.notes.size == 0 %}
+  <p style="color:var(--muted);font-size:0.9rem;">no notes yet.</p>
+  {% endif %}
+
+  {% for note in site.data.notes %}
+  <div class="note">
+    <div class="note-meta">{{ note.date }}</div>
+    <div class="note-text">{{ note.text | markdownify }}</div>
+  </div>
+  {% endfor %}
+</section>

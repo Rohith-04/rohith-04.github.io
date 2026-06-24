@@ -7,10 +7,9 @@
   <div class="sb-section">
     <div class="sb-label">pages</div>
     <div class="sb-links">
-      <a href="{{ '/' | relative_url }}#posts">posts</a>
+      <a href="{{ '/posts/' | relative_url }}">posts</a>
       <a href="{{ '/projects/' | relative_url }}">projects</a>
-      <a href="{{ '/' | relative_url }}#notes">notes</a>
-      <a href="{{ '/' | relative_url }}#reading">reading</a>
+      <a href="{{ '/notes/' | relative_url }}">notes</a>
       <a href="{{ '/about/' | relative_url }}">about</a>
     </div>
   </div>
@@ -33,6 +32,9 @@
     <div class="sb-label" style="margin-bottom: 0.4rem;">find me</div>
     {% if site.github_username %}
     <a href="https://github.com/{{ site.github_username }}">github</a>
+    {% endif %}
+    {% if site.linkedin_username %}
+    <a href="https://linkedin.com/in/{{ site.linkedin_username }}">linkedin</a>
     {% endif %}
     {% if site.email %}
     <a href="mailto:{{ site.email }}">email</a>

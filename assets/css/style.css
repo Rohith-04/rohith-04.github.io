@@ -14,7 +14,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 17px; }
+html { font-size: 20px; }
 body {
   background: var(--bg);
   color: var(--text);
@@ -73,9 +73,9 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .sb-links a {
   font-family: var(--mono);
   font-size: 0.75rem;
-  color: var(--muted);
+  color: var(--text);
 }
-.sb-links a:hover { color: var(--text); text-decoration: none; }
+.sb-links a:hover { color: var(--link); text-decoration: none; }
 
 .proj-item {
   padding: 0.45rem 0;
@@ -105,9 +105,9 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .sb-footer a {
   font-family: var(--mono);
   font-size: 0.72rem;
-  color: var(--muted);
+  color: var(--text);
 }
-.sb-footer a:hover { color: var(--text); text-decoration: none; }
+.sb-footer a:hover { color: var(--link); text-decoration: none; }
 
 /* ── main ────────────────────────────────── */
 .main {
@@ -124,11 +124,40 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   font-size: 0.62rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--faint);
+  color: var(--muted);
   margin-bottom: 1.25rem;
-  padding-bottom: 0.35rem;
-  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid var(--link);
 }
+
+/* search */
+.search-wrapper { margin-bottom: 1.5rem; }
+.search-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  padding: 0.5rem 0.75rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.search-input:focus { border-color: var(--link); }
+.search-input::placeholder { color: var(--faint); }
+
+.sort-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  padding: 0 0.75rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+}
+.sort-btn:hover { color: var(--text); border-color: var(--link); }
 
 /* intro */
 .intro p {
@@ -160,11 +189,11 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   font-family: var(--serif);
   font-size: 0.93rem;
   color: var(--text);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.45;
 }
 .post-title a { color: inherit; }
-.post-title a:hover { color: var(--link); text-decoration: none; }
+.post-title a:hover { color: var(--link); text-decoration: underline; }
 .post-blurb {
   font-size: 0.8rem;
   color: var(--muted);
@@ -221,8 +250,10 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   font-family: var(--mono);
   font-size: 0.85rem;
   color: var(--text);
-  font-weight: 500;
+  font-weight: 600;
 }
+.proj-card-name a { color: inherit; }
+.proj-card-name a:hover { color: var(--link); text-decoration: none; }
 .proj-card-status {
   font-family: var(--mono);
   font-size: 0.62rem;
@@ -246,7 +277,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   align-items: baseline;
 }
 .book:first-child { border-top: 1px solid var(--border); }
-.book-title { font-size: 0.85rem; color: var(--text); }
+.book-title { font-size: 0.85rem; color: var(--text); font-weight: 500; }
 .book-status {
   font-family: var(--mono);
   font-size: 0.62rem;
@@ -262,9 +293,9 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 .post-header h1 {
   font-family: var(--serif);
-  font-size: 1.4rem;
-  font-weight: 500;
-  line-height: 1.4;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.35;
   margin-bottom: 0.5rem;
 }
 .post-meta {
@@ -282,16 +313,16 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .post-content li { margin-bottom: 0.3rem; }
 .post-content h2 {
   font-family: var(--serif);
-  font-size: 1.15rem;
-  font-weight: 500;
-  margin: 2rem 0 0.75rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 2.5rem 0 0.75rem;
   color: var(--text);
 }
 .post-content h3 {
   font-family: var(--serif);
-  font-size: 1rem;
-  font-weight: 500;
-  margin: 1.5rem 0 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 1.75rem 0 0.5rem;
   color: var(--text);
 }
 .post-content code {
@@ -323,7 +354,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   font-size: 0.75rem;
 }
 .post-nav a { color: var(--muted); }
-.post-nav a:hover { color: var(--text); text-decoration: none; }
+.post-nav a:hover { color: var(--link); text-decoration: none; }
 
 /* page */
 .page-header {
@@ -333,8 +364,8 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 .page-header h1 {
   font-family: var(--serif);
-  font-size: 1.3rem;
-  font-weight: 500;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 .page-content {
   font-size: 0.95rem;

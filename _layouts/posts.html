@@ -1,0 +1,69 @@
+---
+layout: default
+---
+
+<section class="section">
+  <div class="section-label">all posts</div>
+
+  <div class="search-wrapper" style="display:flex;gap:0.5rem;align-items:stretch;">
+    <input type="text" id="post-search" class="search-input" placeholder="search by title, tag, or content..." style="flex:1;" />
+    <button id="sort-toggle" class="sort-btn" title="toggle date order">newest first</button>
+  </div>
+
+  <div class="post-list" id="post-list">
+    {% for post in site.posts %}
+    <div class="post" data-search="{{ post.title | escape }} {{ post.tags | join: ' ' }} {{ post.excerpt | strip_html | escape | truncatewords: 50 }}" data-date="{{ post.date | date: '%Y%m%d' }}">
+      <span class="post-date">{{ post.date | date: "%d %b %Y" }}</span>
+      <div class="post-body">
+        <div class="post-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></div>
+        {% if post.excerpt %}
+        <div class="post-blurb">{{ post.excerpt | strip_html | truncatewords: 25 }}</div>
+        {% endif %}
+        {% if post.tags.size > 0 %}
+        <div class="post-tags">{% for tag in post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% if site.posts.size == 0 %}
+  <p style="color:var(--muted);font-size:0.9rem;">no posts yet.</p>
+  {% endif %}
+</section>
+
+<script>
+(function() {
+  var input = document.getElementById('post-search');
+  var sortBtn = document.getElementById('sort-toggle');
+  var list = document.getElementById('post-list');
+  if (!input || !sortBtn || !list) return;
+
+  var desc = true;
+
+  function sort() {
+    var items = Array.prototype.slice.call(list.children);
+    items.sort(function(a, b) {
+      var da = parseInt(a.getAttribute('data-date'));
+      var db = parseInt(b.getAttribute('data-date'));
+      return desc ? db - da : da - db;
+    });
+    items.forEach(function(item) { list.appendChild(item); });
+    sortBtn.textContent = desc ? 'newest first' : 'oldest first';
+  }
+
+  sortBtn.addEventListener('click', function() {
+    desc = !desc;
+    sort();
+  });
+
+  input.addEventListener('input', function() {
+    var q = this.value.toLowerCase().trim();
+    var posts = list.querySelectorAll('.post');
+    posts.forEach(function(post) {
+      var data = (post.getAttribute('data-search') || '').toLowerCase();
+      post.style.display = (!q || data.indexOf(q) !== -1) ? '' : 'none';
+    });
+  });
+})();
+</script>
