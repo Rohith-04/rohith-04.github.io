@@ -1,8 +1,0 @@
-- date: "jun 2025 — mutlu's memory lectures"
-  text: "the DRAM refresh overhead section is making me rethink assumptions about memory controller design. the latency numbers feel wrong until you draw the timing diagram by hand. i drew it three times."
-
-- date: "may 2025 — UVM factory override"
-  text: "used `type_id::set_type_override_by_type()` to swap in an error-injection driver without touching the testbench topology. first time factory overrides felt like a feature and not ceremony."
-
-- date: "apr 2025 — mesh NoC deadlock"
-  text: "three days chasing a livelock. two routers waiting on each other's credits. the flow control assumptions were implicit in the RTL. writing them down first would have saved the three days."
