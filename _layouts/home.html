@@ -3,11 +3,7 @@ layout: default
 ---
 
 <section class="section intro">
-  <p>hi, i'm {{ site.author }}.</p>
-  <p>
-    {{ site.description }}
-  </p>
-  <p class="dim">this is my engineering notebook. notes on things i build, things i'm studying, and things i'm trying to understand.</p>
+  {{ content }}
 </section>
 
 {% assign sorted_projects = site.projects | sort: "order" %}
